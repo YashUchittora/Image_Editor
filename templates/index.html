@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Filters</title>
+    <link rel="stylesheet" href="/static/stylesheet1.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="/">
+            <img src="/static/logo2.png" alt="Logo" class="navbar-logo">
+        </a>
+        <h1 class="navbar-title">Image Filters</h1>
+        <a href="{{ processed_image }}" download="processed_image.jpg">
+            <button class="download-button">Download</button>
+        </a>
+    </header>
+    
+    <main class="container">
+        <section class="form-container">
+            <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                <label for="file-input">Choose an image:</label>
+                <input type="file" id="file-input" name="file" accept="image/*" required>
+                
+                <label for="rotate">Rotate:</label>
+                <input type="range" name="rotate" id="rotate" min="-360" max="360" value="0" list="tickmarks">
+                <datalist id="tickmarks">
+                    <option value="-360"></option>
+                    <option value="-180"></option>
+                    <option value="0"></option>
+                    <option value="180"></option>
+                    <option value="360"></option>
+                </datalist>
+                
+                <label for="blur">Blur:</label>
+                <input type="range" name="blur" id="blur" min="0" max="100" value="0">
+
+                <label for="brightness">Brightness:</label>
+                <input type="range" name="brightness" id="brightness" min="-100" max="100" value="0">
+               
+                <label for="aspect-ratio">Crop:</label>
+                <select name="aspect-ratio" id="aspect-ratio">
+                    <option value="custom">Custom</option>
+                    <option value="16:9">16:9</option>
+                    <option value="4:3">4:3</option>
+                    <option value="21:9">21:9</option>
+                    <option value="9:16">9:16</option>
+                    <option value="3:4">3:4</option>
+                    <option value="3:2">3:2</option>
+                    <option value="5:4">5:4</option>
+                    <option value="1:1">1:1</option>
+                </select>
+                <input type="number" name="custom-x" id="custom-x" placeholder="Custom X" style="display: none;">
+                <input type="number" name="custom-y" id="custom-y" placeholder="Custom Y" style="display: none;">                
+                
+                <label for="color-tone">Color Tone:</label>
+                <select name="color-tone" id="color-tone">
+                    <option value="normal">Normal</option>
+                    <option value="black-and-white">Black & White</option>
+                    <!-- Add more color options here -->
+                    <option value="gray">Gray</option>
+                    <option value="cool">Cool</option>
+                    <option value="hot">Hot</option>
+                    <option value="spring">Spring</option>
+                    <option value="summer">Summer</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="winter">Winter</option>
+                    <option value="bone">Bone</option>
+                    <option value="copper">Copper</option>
+                    <option value="flag">Flag</option>
+                    <option value="prism">Prism</option>
+                    <option value="ocean">Ocean</option>
+                    <option value="gist_earth">Gist Earth</option>
+                    <option value="terrain">Terrain</option>
+                    <option value="gist_stern">Gist Stern</option>
+                    <option value="gnuplot">Gnuplot</option>
+                    <option value="gnuplot2">Gnuplot2</option>
+                    <option value="CMRmap">CMRmap</option>
+                    <option value="brg">BRG</option>
+                    <option value="hsv">HSV</option>
+                    <option value="pink">Pink</option>
+                    <option value="rainbow">Rainbow</option>
+                    <option value="jet">Jet</option>
+                    <option value="nipy_spectral">Nipy Spectral</option>
+                    <option value="gist_ncar">Gist Ncar</option>
+                </select>
+
+                <label for="text">Add text:</label>
+                <input type="text" name="text" id="text">
+                
+                <label for="text-x" style="display: inline-block; width: 80px;">Text X:</label>
+                <input type="number" name="text-x" id="text-x" value="0" style="display: inline-block; width: 60px; margin-right: 20px;">
+                                
+                <label for="text-y" style="display: inline-block; width: 80px;">Text Y:</label>
+                <input type="number" name="text-y" id="text-y" value="0" style="display: inline-block; width: 60px;">
+
+                <label for="text-color" style="display: inline-block; width: 80px;">Text Color:</label>
+                <input type="color" name="text-color" id="text-color" value="#000000" style="display: inline-block; width: 60px; margin-right: 20px">
+
+                <label for="font-size" style="display: inline-block; width: 80px;">Font Size:</label>
+                <input type="number" name="font-size" id="font-size" value="20" style="display: inline-block; width: 60px; margin-right: 20px">
+                
+                
+                <label for="font-type">Font Type:</label>
+                <select name="font-type" id="font-type">
+                    <option value="arial.ttf">Arial</option>
+                    <option value="times.ttf">Times New Roman</option>
+                    <!-- Add more font options here -->
+                </select>
+                
+                <button type="submit">Apply Filters</button>
+            </form>
+        </section>
+        <section class="rigid-box">
+            {% if processed_image %}
+            
+            <div class="image-wrapper">
+                <img src="{{ processed_image }}" alt="Processed Image" id="processed-image">
+            </div>
+            <!-- Download button -->
+        {% endif %}
+        </section>
+        
+        <!-- <button onclick="window.location.href='/undo'">Undo</button>
+        <button onclick="window.location.href='/redo'">Redo</button> -->
+        </main>
+</body>
+</html>
